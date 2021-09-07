@@ -1,5 +1,5 @@
 {
-    "name": "dreibein/contao-letter-bundle",
+    "name": "dreibein/contao-jobletter-bundle",
     "type": "contao-bundle",
     "description": "Dreibein Jobletter",
     "license": "LGPL-3.0+",
