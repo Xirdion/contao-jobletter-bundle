@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" target-language="de" datatype="php" original="src/Resources/contao/languages/en/tl_module.php">
+        <body>
+            <trans-unit id="1">
+                <source>tl_module.jl_text_subscribe.0</source>
+                <target>Ihr Abonnement auf %s</target>
+            </trans-unit>
+            <trans-unit id="2">
+                <source>tl_module.jl_text_subscribe.1</source>
+                <target>Sie haben folgende Job-Archive {if categories != ''}und Job-Kategorien {endif}auf ##domain## für die E-Mail-Adresse ##email## abonniert:
+
+Job-Archive:
+##archives##
+
+{if categories != ''}
+Job-Kategorien:
+##categories##
+{endif}
+
+Bitte klicken Sie hier, um Ihr Abonnement zu aktivieren:
+
+##link##
+
+Der Bestätigungslink ist 24 Stunden gültig. Sie können Ihr Abonnement jederzeit beenden.
+
+Falls Sie das Abonnement nicht selbst ausgeführt haben, ignorieren Sie diese E-Mail bitte.</target>
+            </trans-unit>
+            <trans-unit id="3">
+                <source>tl_module.jl_text_unsubscribe.0</source>
+                <target>Ihr Abonnement auf %s</target>
+            </trans-unit>
+            <trans-unit id="4">
+                <source>tl_module.jl_text_unsubscribe.1</source>
+                <target>Sie haben folgende Abonnements auf ##domain## gekündigt:
+
+Job-Archive:
+##archives##
+
+{if categories != ''}
+Job-Kategorien:
+##categories##
+{endif}</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

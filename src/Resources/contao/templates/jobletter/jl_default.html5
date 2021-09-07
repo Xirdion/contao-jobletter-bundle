@@ -1,0 +1,73 @@
+<?php $this->extend('block_unsearchable'); ?>
+
+<?php $this->block('content'); ?>
+
+<?php if ($this->message): ?>
+    <div class="messages">
+        <p class="<?= $this->mclass ?>"><?= $this->message ?></p>
+    </div>
+<?php endif; ?>
+
+<?php if (true === $this->showForm): ?>
+    <form id="<?= $this->formId ?>" method="post">
+        <div class="formbody">
+            <input type="hidden" name="FORM_SUBMIT" value="<?= $this->formId ?>">
+            <input type="hidden" name="REQUEST_TOKEN" value="{{request_token}}">
+
+
+
+            <?php if (!$this->showArchives): ?>
+                <?php foreach ($this->archives as $id => $title): ?>
+                    <input type="hidden" name="archives[]" value="<?= $id ?>">
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <?php if (!$this->showCategories): ?>
+                <?php foreach ($this->categories as $id => $title): ?>
+                    <input type="hidden" name="categories[]" value="<?= $id ?>">
+                <?php endforeach; ?>
+            <?php endif; ?>
+
+            <div class="widget widget-text mandatory">
+                <label for="ctrl_email_<?= $this->id ?>" class="invisible"><?= $this->emailLabel ?></label>
+                <input type="email" name="email" id="ctrl_email_<?= $this->id ?>" class="text mandatory" value="<?= $this->email ?>" placeholder="<?= $this->emailLabel ?>" required>
+            </div>
+
+            <?php if ($this->showArchives): ?>
+                <div class="widget widget-checkbox">
+                    <fieldset id="ctrl_archives_<?= $this->id ?>" class="checkbox_container">
+                        <legend class="invisible"><?= $this->archivesLabel ?></legend>
+                        <?php foreach ($this->archives as $id => $title): ?>
+                            <span><input type="checkbox" name="archives[]" id="opt_<?= $this->id ?>_<?= $id ?>" value="<?= $id ?>" class="checkbox"<?php if (\in_array($id, $this->selectedArchives, true)): ?> checked<?php endif; ?>> <label for="opt_<?= $this->id ?>_<?= $id ?>"><?= $title ?></label></span>
+                        <?php endforeach; ?>
+                    </fieldset>
+                </div>
+            <?php endif; ?>
+
+            <?php if ($this->showCategories): ?>
+                <div class="widget widget-checkbox">
+                    <fieldset id="ctrl_categories_<?= $this->id ?>" class="checkbox_container">
+                        <legend class="invisible"><?= $this->categoriessLabel ?></legend>
+                        <?php foreach ($this->categories as $id => $title): ?>
+                            <span><input type="checkbox" name="categories[]" id="opt_<?= $this->id ?>_<?= $id ?>" value="<?= $id ?>" class="checkbox"<?php if (\in_array($id, $this->selectedCategories, true)): ?> checked<?php endif; ?>> <label for="opt_<?= $this->id ?>_<?= $id ?>"><?= $title ?></label></span>
+                        <?php endforeach; ?>
+                    </fieldset>
+                </div>
+            <?php endif; ?>
+
+            <?= $this->captcha ?>
+
+            <?php if ($this->text): ?>
+                <div class="widget widget-explanation">
+                    <?= $this->text ?>
+                </div>
+            <?php endif; ?>
+
+            <div class="widget widget-submit">
+                <button type="submit" class="submit"><?= $this->submit ?></button>
+            </div>
+        </div>
+    </form>
+<?php endif; ?>
+
+<?php $this->endblock(); ?>

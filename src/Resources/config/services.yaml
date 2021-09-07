@@ -1,0 +1,26 @@
+services:
+  Dreibein\JobletterBundle\Controller\FrontendModule\JobLetterSubscribeController:
+    class: Dreibein\JobletterBundle\Controller\FrontendModule\JobLetterSubscribeController
+    arguments:
+      - '@contao.opt-in'
+      - '@Contao\CoreBundle\Util\SimpleTokenParser'
+      - '@session'
+    tags:
+      - { name: contao.frontend_module, category: jobletter, type: job_letter_subscribe, template: jl_default }
+
+  Dreibein\JobletterBundle\Controller\FrontendModule\JobLetterUnsubscribeController:
+    class: Dreibein\JobletterBundle\Controller\FrontendModule\JobLetterUnsubscribeController
+    arguments:
+      - '@contao.opt-in'
+      - '@Contao\CoreBundle\Util\SimpleTokenParser'
+      - '@session'
+    tags:
+      - { name: contao.frontend_module, category: jobletter, type: job_letter_unsubscribe, template: jl_default }
+
+  Dreibein\JobletterBundle\Job\JobLetter:
+    class: Dreibein\JobletterBundle\Job\JobLetter
+    arguments:
+      - '@monolog.logger.contao'
+      - '@contao.framework'
+      - '@Contao\CoreBundle\Util\SimpleTokenParser'
+      - '@Dreibein\JobpostingBundle\Job\UrlGenerator'

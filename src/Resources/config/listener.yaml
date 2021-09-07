@@ -1,0 +1,23 @@
+services:
+  Dreibein\JobletterBundle\EventListener\DataContainer\JobArchiveListener:
+    class: Dreibein\JobletterBundle\EventListener\DataContainer\JobArchiveListener
+    arguments:
+      - '@Contao\CoreBundle\Mailer\AvailableTransports'
+
+  Dreibein\JobletterBundle\EventListener\DataContainer\JobListener:
+    class: Dreibein\JobletterBundle\EventListener\DataContainer\JobListener
+    arguments:
+      - '@Dreibein\JobletterBundle\Job\JobLetter'
+      - '@contao.framework'
+      - '@request_stack'
+
+  Dreibein\JobletterBundle\EventListener\DataContainer\JobLetterRecipientListener:
+    class: Dreibein\JobletterBundle\EventListener\DataContainer\JobLetterRecipientListener
+    arguments:
+      - '@contao.framework'
+      - '@request_stack'
+
+  Dreibein\JobletterBundle\EventListener\DataContainer\ModuleListener:
+    class: Dreibein\JobletterBundle\EventListener\DataContainer\ModuleListener
+    arguments:
+      - '@translator'

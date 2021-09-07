@@ -1,0 +1,52 @@
+{
+    "name": "dreibein/contao-letter-bundle",
+    "type": "contao-bundle",
+    "description": "Dreibein Jobletter",
+    "license": "LGPL-3.0+",
+    "authors": [
+        {
+            "name": "Thomas Voggenreiter",
+            "email": "t.dirscherl@agentur-dreibein.de",
+            "homepage": "https://www.agentur-dreibein.de"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:dreibein/contao-jobposting-bundle.git"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "contao/conflicts": "@dev",
+        "contao/core-bundle": "^4.9",
+        "dreibein/contao-jobposting-bundle": "*@dev"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "contao/manager-plugin": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.0"
+    },
+    "prefer-stable": true,
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "contao-manager-plugin": "Dreibein\\JobletterBundle\\ContaoManager\\Plugin"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dreibein\\JobletterBundle\\": "src/"
+        },
+        "classmap": [
+            "src/Resources/contao"
+        ],
+        "exclude-from-classmap": [
+            "src/Resources/contao/config/",
+            "src/Resources/contao/dca/",
+            "src/Resources/contao/languages/",
+            "src/Resources/contao/templates/"
+        ]
+    }
+}
