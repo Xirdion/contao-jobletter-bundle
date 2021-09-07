@@ -20,7 +20,7 @@
         "php": ">=7.4.0",
         "contao/conflicts": "@dev",
         "contao/core-bundle": "^4.9",
-        "dreibein/contao-jobposting-bundle": "*@dev"
+        "dreibein/contao-jobposting-bundle": "^1.0"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
