@@ -175,8 +175,8 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
         $this->template->email = $email;
 
         // Validate the archive selection
-        $archives = Input::post('archives');
-        if (false === \is_array($archives)) {
+        $archives = (array) Input::post('archives');
+        if (true === empty($archives)) {
             $this->template->mclass = 'error';
             $this->template->message = $GLOBALS['TL_LANG']['ERR']['noArchives'];
 
@@ -248,11 +248,19 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
             foreach ($subscriptions as $subscription) {
                 // Check if there is already an active subscription for this archive
                 if (\in_array($subscription->getArchive(), $archives, true)) {
-                    // Check if there are different categories as in the active record
-                    $catDiff = array_diff($categories, $subscription->getCategories());
-                    if (true === empty($catDiff)) {
-                        // Add those entries that already active subscription with the same categories
-                        $subscriptionList[] = $subscription->getArchive();
+                    // If $categories is empty it is a special case
+                    // it must only be checked if the subscription has no categories
+                    if (true === empty($categories)) {
+                        if (true === empty($subscription->getCategories())) {
+                            $subscriptionList[] = $subscription->getArchive();
+                        }
+                    } else {
+                        // Check if there are different categories as in the active record
+                        $catDiff = array_diff($categories, $subscription->getCategories());
+                        if (true === empty($catDiff)) {
+                            // Add those entries that already active subscription with the same categories
+                            $subscriptionList[] = $subscription->getArchive();
+                        }
                     }
                 }
             }
