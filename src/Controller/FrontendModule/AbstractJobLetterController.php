@@ -135,6 +135,7 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
         $this->template->emailLabel = $GLOBALS['TL_LANG']['MSC']['emailAddress'];
         $this->template->formId = $this->formId;
         $this->template->id = $this->model->id;
+        $this->template->text = $this->model->jl_text; // only for subscribe module
     }
 
     /**

@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @link       https://github.com/dreibein/contao-jobposting-bundle
  */
 
+use Contao\Config;
 use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 $table = 'tl_job_archive';
@@ -59,7 +60,7 @@ $GLOBALS['TL_DCA'][$table]['fields']['mail_sender'] = [
     'search' => true,
     'filter' => true,
     'inputType' => 'text',
-    'eval' => ['rgxp' => 'email', 'maxlength' => 255, 'decodeEntities' => true, 'tl_class' => 'w50 clr'],
+    'eval' => ['rgxp' => 'email', 'maxlength' => 255, 'decodeEntities' => true, 'placeholder' => Config::get('adminEmail'), 'tl_class' => 'w50 clr'],
     'sql' => ['type' => 'string', 'length' => 255, 'notnull' => true, 'default' => ''],
 ];
 
