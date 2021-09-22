@@ -99,7 +99,7 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
         $archives = JobArchiveModel::findByIds(StringUtil::deserialize($this->model->jl_archives, true));
         if (null !== $archives) {
             foreach ($archives as $archive) {
-                $archiveList[$archive->getId()] = $archive->getTitle();
+                $archiveList[$archive->getId()] = $archive->getFrontendTitle();
             }
         }
         $this->template->archives = $archiveList;
@@ -108,7 +108,7 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
         $categories = JobCategoryModel::findByIds(StringUtil::deserialize($this->model->jl_categories, true));
         if (null !== $categories) {
             foreach ($categories as $category) {
-                $categoryList[$category->getId()] = $category->getTitle();
+                $categoryList[$category->getId()] = $category->getFrontendTitle();
             }
         }
         $this->template->categories = $categoryList;
