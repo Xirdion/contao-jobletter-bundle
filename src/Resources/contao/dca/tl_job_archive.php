@@ -23,7 +23,7 @@ $GLOBALS['TL_DCA'][$table]['list']['operations']['recipients'] = [
 ];
 
 PaletteManipulator::create()
-    ->addLegend('mail_legend', 'title_legend', PaletteManipulator::POSITION_AFTER)
+    ->addLegend('mail_legend', 'apply_legend', PaletteManipulator::POSITION_AFTER)
     ->addField(['mail_subject', 'mail_text'], 'mail_legend', PaletteManipulator::POSITION_APPEND)
     ->addLegend('sender_legend', 'mail_legend', PaletteManipulator::POSITION_AFTER)
     ->addField(['mail_transport', 'mail_sender', 'mail_senderName'], 'sender_legend', PaletteManipulator::POSITION_APPEND)
