@@ -22,6 +22,7 @@ use Contao\StringUtil;
 use Contao\Template;
 use Dreibein\JobletterBundle\Model\JobLetterDenyListModel;
 use Dreibein\JobletterBundle\Model\JobLetterRecipientModel;
+use Dreibein\JobletterBundle\OptIn\OptInToken;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -141,6 +142,7 @@ class JobLetterSubscribeController extends AbstractJobLetterController
         }
 
         // Create the opt-in-token
+        /** @var OptInToken $optInToken */
         $optInToken = $this->optIn->create('jl', $email, $relatedEntries);
 
         // Set the simple token data
@@ -154,6 +156,14 @@ class JobLetterSubscribeController extends AbstractJobLetterController
         ];
 
         // Send the opt-in-message via mail
+        $page = $this->getPageModel();
+        if (null !== $page) {
+            // Try to use the admin email address from the root page
+            $page->loadDetails();
+            if ($page->adminEmail) {
+                $optInToken->setSender($page->adminEmail);
+            }
+        }
         $optInToken->send(
             sprintf($GLOBALS['TL_LANG']['MSC']['jl_subject'], Idna::decode(Environment::get('host'))),
             $this->parser->parse($this->model->jl_subscribe, $simpleTokens) // parse the text field from module-config

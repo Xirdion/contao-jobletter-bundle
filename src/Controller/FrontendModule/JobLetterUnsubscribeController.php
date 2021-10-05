@@ -122,8 +122,18 @@ class JobLetterUnsubscribeController extends AbstractJobLetterController
             'email' => $email,
         ];
 
+        $senderAddress = $GLOBALS['TL_ADMIN_EMAIL'];
+        $page = $this->getPageModel();
+        if (null !== $page) {
+            // Try to use the admin email address from the root page
+            $page->loadDetails();
+            if ($page->adminEmail) {
+                $senderAddress = $page->adminEmail;
+            }
+        }
+
         $confirmationMail = new Email();
-        $confirmationMail->from = $GLOBALS['TL_ADMIN_EMAIL'];
+        $confirmationMail->from = $senderAddress;
         $confirmationMail->fromName = $GLOBALS['TL_ADMIN_NAME'];
         $confirmationMail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['jl_subject'], Idna::decode(Environment::get('host')));
         $confirmationMail->text = $this->parser->parse($this->model->jl_unsubscribe, $simpleTokens);
