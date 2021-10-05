@@ -19,6 +19,7 @@ use Contao\FormCaptcha;
 use Contao\FrontendTemplate;
 use Contao\Idna;
 use Contao\Input;
+use Contao\Model\Collection;
 use Contao\ModuleModel;
 use Contao\StringUtil;
 use Contao\Template;
@@ -26,6 +27,7 @@ use Contao\Validator;
 use Dreibein\JobletterBundle\Model\JobLetterRecipientModel;
 use Dreibein\JobpostingBundle\Model\JobArchiveModel;
 use Dreibein\JobpostingBundle\Model\JobCategoryModel;
+use Dreibein\JobpostingBundle\Model\JobModelInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
@@ -282,7 +284,7 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
             return '';
         }
 
-        return implode(', ', $archiveModels->fetchEach('title'));
+        return $this->generateModelTokens($archiveModels);
     }
 
     /**
@@ -301,6 +303,25 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
             return '';
         }
 
-        return implode(', ', $categoryModels->fetchEach('title'));
+        return $this->generateModelTokens($categoryModels);
+    }
+
+    /**
+     * @param Collection $models
+     *
+     * @return string
+     */
+    private function generateModelTokens(Collection $models): string
+    {
+        $tokens = '';
+        /** @var JobModelInterface $model */
+        foreach ($models as $model) {
+            if ('' !== $tokens) {
+                $tokens .= ', ';
+            }
+            $tokens .= $model->getFrontendTitle();
+        }
+
+        return $tokens;
     }
 }

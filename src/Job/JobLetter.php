@@ -218,15 +218,15 @@ class JobLetter
                 if ('' !== $categoryText) {
                     $categoryText .= ', ';
                 }
-                $categoryText .= $category->getTitle();
+                $categoryText .= $category->getFrontendTitle();
             }
         }
 
         return [
             'email' => $recipient->getEmail(),
-            'archive' => $this->jobArchive->getTitle(),
+            'archive' => $this->jobArchive->getFrontendTitle(),
             'categories' => $categoryText,
-            'job' => $this->job->getTitle(),
+            'job' => $this->job->getFrontendTitle(),
             'job_link' => $this->urlGenerator->generateJobUrl($this->job, true),
         ];
     }
