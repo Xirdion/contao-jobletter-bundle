@@ -71,6 +71,9 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
             $this->template = $jobTemplate;
         }
 
+        // Set some properties for the template
+        $this->setContainerTemplate();
+
         // Set some initial values for the template
         $this->initTemplateData();
 
@@ -139,18 +142,6 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
         $this->template->formId = $this->formId;
         $this->template->id = $this->model->id;
         $this->template->text = $this->model->jl_text; // only for subscribe module
-
-        // Get the id of the main container to be used as an anchor in the mail link
-        if (null === $this->template->cssID) {
-            $id = 'jobletter_' . $this->model->id;
-            $this->containerId = $id;
-            $this->template->cssID = sprintf('id="jobletter_%s"', $id);
-        } else {
-            $this->containerId = StringUtil::deserialize($this->model->cssID, true)[0];
-        }
-
-        // Add another css class to the container
-        $this->template->class .= 'mod_jobletter';
     }
 
     /**
@@ -322,6 +313,21 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
     protected function ampersand(string $strString, bool $encode = true): string
     {
         return preg_replace('/&(amp;)?/i', ($encode ? '&amp;' : '&'), $strString);
+    }
+
+    protected function setContainerTemplate(): void
+    {
+        // Get the id of the main container to be used as an anchor in the mail link
+        if ('' === $this->template->cssID) {
+            $id = 'jobletter_' . $this->model->id;
+            $this->containerId = $id;
+            $this->template->cssID = sprintf('id="%s"', $id);
+        } else {
+            $this->containerId = StringUtil::deserialize($this->model->cssID, true)[0];
+        }
+
+        // Add another css class to the container
+        $this->template->class .= ' mod_jobletter';
     }
 
     /**

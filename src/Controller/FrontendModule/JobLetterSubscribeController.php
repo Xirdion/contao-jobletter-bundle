@@ -146,7 +146,7 @@ class JobLetterSubscribeController extends AbstractJobLetterController
 
         $url = $this->ampersand($this->request->getUri());
         $url .= ((false !== strpos($url, '?')) ? '&' : '?') . 'token=' . $optInToken->getIdentifier();
-        $url .= '/' . $this->containerId;
+        $url .= '#' . $this->containerId;
 
         // Set the simple token data
         $simpleTokens = [
@@ -200,9 +200,16 @@ class JobLetterSubscribeController extends AbstractJobLetterController
     {
         // Activate e-mail address
         if (0 === strncmp((string) $request->query->get('token'), 'jl-', 3)) {
-            $this->activateRecipient($template);
+            $this->template = $template;
+            $this->model = $model;
+            $this->request = $request;
 
-            return $template->getResponse();
+            // Set some properties for the template
+            $this->setContainerTemplate();
+
+            $this->activateRecipient($this->template);
+
+            return $this->template->getResponse();
         }
 
         return parent::getResponse($template, $model, $request);
