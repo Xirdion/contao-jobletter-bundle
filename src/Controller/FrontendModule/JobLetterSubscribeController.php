@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Dreibein\JobletterBundle\Controller\FrontendModule;
 
 use Contao\Controller;
-use Contao\Environment;
 use Contao\Idna;
 use Contao\Input;
 use Contao\ModuleModel;
@@ -145,13 +144,17 @@ class JobLetterSubscribeController extends AbstractJobLetterController
         /** @var OptInToken $optInToken */
         $optInToken = $this->optIn->create('jl', $email, $relatedEntries);
 
+        $url = $this->ampersand($this->request->getUri());
+        $url .= ((false !== strpos($url, '?')) ? '&' : '?') . 'token=' . $optInToken->getIdentifier();
+        $url .= '/' . $this->containerId;
+
         // Set the simple token data
         $simpleTokens = [
             'archives' => $this->createArchiveTokenString($archives),
             'categories' => $this->createCategoryTokenString($categories),
             'token' => $optInToken->getIdentifier(),
-            'domain' => Idna::decode(Environment::get('host')),
-            'link' => Idna::decode(Environment::get('base')) . Environment::get('request') . ((false !== strpos(Environment::get('request'), '?')) ? '&' : '?') . 'token=' . $optInToken->getIdentifier(),
+            'domain' => Idna::decode($this->request->getSchemeAndHttpHost()),
+            'link' => Idna::decode($url),
             'email' => $email,
         ];
 
@@ -165,7 +168,7 @@ class JobLetterSubscribeController extends AbstractJobLetterController
             }
         }
         $optInToken->send(
-            sprintf($GLOBALS['TL_LANG']['MSC']['jl_subject'], Idna::decode(Environment::get('host'))),
+            sprintf($GLOBALS['TL_LANG']['MSC']['jl_subject'], Idna::decode($this->request->getSchemeAndHttpHost())),
             $this->parser->parse($this->model->jl_subscribe, $simpleTokens) // parse the text field from module-config
         );
 

@@ -14,7 +14,6 @@ namespace Dreibein\JobletterBundle\Controller\FrontendModule;
 
 use Contao\Controller;
 use Contao\Email;
-use Contao\Environment;
 use Contao\Idna;
 use Contao\PageModel;
 use Contao\StringUtil;
@@ -118,7 +117,7 @@ class JobLetterUnsubscribeController extends AbstractJobLetterController
         $simpleTokens = [
             'archives' => $this->createArchiveTokenString($archives),
             'categories' => $this->createCategoryTokenString($categories),
-            'domain' => Idna::decode(Environment::get('host')),
+            'domain' => Idna::decode($this->request->getSchemeAndHttpHost()),
             'email' => $email,
         ];
 
@@ -135,7 +134,7 @@ class JobLetterUnsubscribeController extends AbstractJobLetterController
         $confirmationMail = new Email();
         $confirmationMail->from = $senderAddress;
         $confirmationMail->fromName = $GLOBALS['TL_ADMIN_NAME'];
-        $confirmationMail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['jl_subject'], Idna::decode(Environment::get('host')));
+        $confirmationMail->subject = sprintf($GLOBALS['TL_LANG']['MSC']['jl_subject'], Idna::decode($this->request->getSchemeAndHttpHost()));
         $confirmationMail->text = $this->parser->parse($this->model->jl_unsubscribe, $simpleTokens);
         $confirmationMail->sendTo($email);
 

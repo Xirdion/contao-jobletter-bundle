@@ -41,6 +41,7 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
     protected ModuleModel $model;
     protected Request $request;
     protected string $formId;
+    protected string $containerId = '';
 
     /**
      * @param OptInInterface    $optIn
@@ -64,10 +65,10 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
 
         // Depending on the settings of the module model another template is used.
         if ($model->jl_template) {
-            $template = new FrontendTemplate($model->jl_template);
-            $template->setData($model->arrData);
+            $jobTemplate = new FrontendTemplate($model->jl_template);
+            $jobTemplate->setData($template->getData());
 
-            $this->template = $template;
+            $this->template = $jobTemplate;
         }
 
         // Set some initial values for the template
@@ -138,6 +139,18 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
         $this->template->formId = $this->formId;
         $this->template->id = $this->model->id;
         $this->template->text = $this->model->jl_text; // only for subscribe module
+
+        // Get the id of the main container to be used as an anchor in the mail link
+        if (null === $this->template->cssID) {
+            $id = 'jobletter_' . $this->model->id;
+            $this->containerId = $id;
+            $this->template->cssID = sprintf('id="jobletter_%s"', $id);
+        } else {
+            $this->containerId = StringUtil::deserialize($this->model->cssID, true)[0];
+        }
+
+        // Add another css class to the container
+        $this->template->class .= 'mod_jobletter';
     }
 
     /**
@@ -304,6 +317,11 @@ abstract class AbstractJobLetterController extends AbstractFrontendModuleControl
         }
 
         return $this->generateModelTokens($categoryModels);
+    }
+
+    protected function ampersand(string $strString, bool $encode = true): string
+    {
+        return preg_replace('/&(amp;)?/i', ($encode ? '&amp;' : '&'), $strString);
     }
 
     /**
