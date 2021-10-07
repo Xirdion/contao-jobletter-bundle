@@ -22,6 +22,7 @@ use Contao\CoreBundle\Util\SimpleTokenParser;
 use Contao\Email;
 use Contao\Idna;
 use Contao\Message;
+use Contao\PageModel;
 use Dreibein\JobletterBundle\Model\JobLetterJobArchiveModel;
 use Dreibein\JobletterBundle\Model\JobLetterRecipientModel;
 use Dreibein\JobletterBundle\Model\JobLetterRecipientSentModel;
@@ -211,6 +212,7 @@ class JobLetter
      */
     private function getEmailTokens(JobLetterRecipientModel $recipient): array
     {
+        // Generate the category-text
         $categoryText = '';
         $categories = $this->categoryModel->findByIds($recipient->getCategories());
         if (null !== $categories) {
@@ -222,12 +224,21 @@ class JobLetter
             }
         }
 
+        // Get the unsubscribe-url
+        $unsubscribeUrl = '';
+        $pageModel = $this->framework->getAdapter(PageModel::class);
+        $page = $pageModel->findById((int) $this->jobArchive->mail_unsubscribe_link);
+        if (null !== $page) {
+            $unsubscribeUrl = $page->getAbsoluteUrl();
+        }
+
         return [
             'email' => $recipient->getEmail(),
             'archive' => $this->jobArchive->getFrontendTitle(),
             'categories' => $categoryText,
             'job' => $this->job->getFrontendTitle(),
             'job_link' => $this->urlGenerator->generateJobUrl($this->job, true),
+            'unsubscribe_link' => $unsubscribeUrl,
         ];
     }
 

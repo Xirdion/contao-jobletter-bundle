@@ -24,7 +24,7 @@ $GLOBALS['TL_DCA'][$table]['list']['operations']['recipients'] = [
 
 PaletteManipulator::create()
     ->addLegend('mail_legend', 'apply_legend', PaletteManipulator::POSITION_AFTER)
-    ->addField(['mail_subject', 'mail_text'], 'mail_legend', PaletteManipulator::POSITION_APPEND)
+    ->addField(['mail_subject', 'mail_text', 'mail_unsubscribe_link'], 'mail_legend', PaletteManipulator::POSITION_APPEND)
     ->addLegend('sender_legend', 'mail_legend', PaletteManipulator::POSITION_AFTER)
     ->addField(['mail_transport', 'mail_sender', 'mail_senderName'], 'sender_legend', PaletteManipulator::POSITION_APPEND)
     ->applyToPalette('default', $table)
@@ -46,6 +46,15 @@ $GLOBALS['TL_DCA'][$table]['fields']['mail_text'] = [
     'inputType' => 'textarea',
     'eval' => ['mandatory' => true, 'decodeEntities' => true, 'class' => 'noresize', 'tl_class' => 'clr'],
     'sql' => ['type' => 'text', 'notnull' => false],
+];
+
+$GLOBALS['TL_DCA'][$table]['fields']['mail_unsubscribe_link'] = [
+    'exclude' => true,
+    'inputType' => 'pageTree',
+    'foreignKey' => 'tl_page.title',
+    'eval' => ['mandatory' => true, 'fieldType' => 'radio'],
+    'sql' => ['type' => 'integer', 'length' => 10, 'unsigned' => true, 'notnull' => true, 'default' => 0],
+    'relation' => ['type' => 'hasOne', 'load' => 'lazy'],
 ];
 
 $GLOBALS['TL_DCA'][$table]['fields']['mail_transport'] = [
