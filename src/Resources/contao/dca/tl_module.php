@@ -16,7 +16,7 @@ $table = 'tl_module';
 
 $subscribePalette = <<<'PALETTE'
 {title_legend},name,headline,type;
-{config_legend},jl_archives,jl_hideArchives,jl_categories,jl_hideCategories;
+{config_legend},jl_archives,jl_hideArchives,jl_categories,jl_hideCategories,jl_addJumpMark;
 {text_legend},jl_text;
 {redirect_legend},jumpTo;
 {email_legend},jl_subscribe;
@@ -61,6 +61,13 @@ $GLOBALS['TL_DCA'][$table]['fields']['jl_categories'] = [
 $GLOBALS['TL_DCA'][$table]['fields']['jl_hideCategories'] = [
     'exclude' => true,
     'inputType' => 'checkbox',
+    'sql' => ['type' => 'boolean', 'notnull' => true, 'default' => false],
+];
+
+$GLOBALS['TL_DCA'][$table]['fields']['jl_addJumpMark'] = [
+    'exclude' => true,
+    'inputType' => 'checkbox',
+    'eval' => ['tl_class' => 'm12'],
     'sql' => ['type' => 'boolean', 'notnull' => true, 'default' => false],
 ];
 

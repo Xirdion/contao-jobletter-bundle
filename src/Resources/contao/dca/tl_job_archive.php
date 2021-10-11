@@ -11,7 +11,6 @@ declare(strict_types=1);
  */
 
 use Contao\Config;
-use Contao\CoreBundle\DataContainer\PaletteManipulator;
 
 $table = 'tl_job_archive';
 
@@ -21,14 +20,6 @@ $GLOBALS['TL_DCA'][$table]['list']['operations']['recipients'] = [
     'href' => 'table=tl_job_letter_recipient',
     'icon' => 'mgroup.svg',
 ];
-
-PaletteManipulator::create()
-    ->addLegend('mail_legend', 'apply_legend', PaletteManipulator::POSITION_AFTER)
-    ->addField(['mail_subject', 'mail_text', 'mail_unsubscribe_link'], 'mail_legend', PaletteManipulator::POSITION_APPEND)
-    ->addLegend('sender_legend', 'mail_legend', PaletteManipulator::POSITION_AFTER)
-    ->addField(['mail_transport', 'mail_sender', 'mail_senderName'], 'sender_legend', PaletteManipulator::POSITION_APPEND)
-    ->applyToPalette('default', $table)
-;
 
 $GLOBALS['TL_DCA'][$table]['fields']['mail_subject'] = [
     'exclude' => true,

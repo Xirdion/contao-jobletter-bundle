@@ -146,7 +146,11 @@ class JobLetterSubscribeController extends AbstractJobLetterController
 
         $url = $this->ampersand($this->request->getUri());
         $url .= ((false !== strpos($url, '?')) ? '&' : '?') . 'token=' . $optInToken->getIdentifier();
-        $url .= '#' . $this->containerId;
+
+        // Check if the jump mark should be added to the opt-in-url
+        if (true === (bool) $this->model->jl_addJumpMark) {
+            $url .= '#' . $this->containerId;
+        }
 
         // Set the simple token data
         $simpleTokens = [
