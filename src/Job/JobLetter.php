@@ -18,7 +18,7 @@ use Contao\CoreBundle\Exception\InternalServerErrorException;
 use Contao\CoreBundle\Framework\Adapter;
 use Contao\CoreBundle\Framework\ContaoFramework;
 use Contao\CoreBundle\Monolog\ContaoContext;
-use Contao\CoreBundle\Util\SimpleTokenParser;
+use Contao\CoreBundle\String\SimpleTokenParser;
 use Contao\Email;
 use Contao\Idna;
 use Contao\Message;

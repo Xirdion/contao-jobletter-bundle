@@ -3,7 +3,7 @@ services:
     class: Dreibein\JobletterBundle\Controller\FrontendModule\JobLetterSubscribeController
     arguments:
       - '@Dreibein\JobletterBundle\OptIn\OptIn'
-      - '@Contao\CoreBundle\Util\SimpleTokenParser'
+      - '@Contao\CoreBundle\String\SimpleTokenParser'
       - '@session'
     tags:
       - { name: contao.frontend_module, category: jobletter, type: job_letter_subscribe, template: jl_default }
@@ -12,7 +12,7 @@ services:
     class: Dreibein\JobletterBundle\Controller\FrontendModule\JobLetterUnsubscribeController
     arguments:
       - '@Dreibein\JobletterBundle\OptIn\OptIn'
-      - '@Contao\CoreBundle\Util\SimpleTokenParser'
+      - '@Contao\CoreBundle\String\SimpleTokenParser'
       - '@session'
     tags:
       - { name: contao.frontend_module, category: jobletter, type: job_letter_unsubscribe, template: jl_default }
@@ -22,7 +22,7 @@ services:
     arguments:
       - '@monolog.logger.contao'
       - '@contao.framework'
-      - '@Contao\CoreBundle\Util\SimpleTokenParser'
+      - '@Contao\CoreBundle\String\SimpleTokenParser'
       - '@Dreibein\JobpostingBundle\Job\UrlGenerator'
 
   Dreibein\JobletterBundle\OptIn\OptIn:
