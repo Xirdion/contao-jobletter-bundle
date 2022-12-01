@@ -122,7 +122,7 @@ class JobLetterSubscribeController extends AbstractJobLetterController
                 $subscription = new JobLetterRecipientModel();
                 $subscription->email = $email;
                 $subscription->pid = $archive;
-                $subscription->active = false;
+                $subscription->active = 0;
                 $subscription->addedOn = $time;
             }
             $subscription->tstamp = $time;
