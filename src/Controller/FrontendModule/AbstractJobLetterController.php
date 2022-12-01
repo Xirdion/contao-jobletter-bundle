@@ -14,7 +14,7 @@ namespace Dreibein\JobletterBundle\Controller\FrontendModule;
 
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
 use Contao\CoreBundle\OptIn\OptInInterface;
-use Contao\CoreBundle\Util\SimpleTokenParser;
+use Contao\CoreBundle\String\SimpleTokenParser;
 use Contao\FormCaptcha;
 use Contao\FrontendTemplate;
 use Contao\Idna;
